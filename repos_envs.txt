@@ -1,0 +1,4 @@
+https://github.com/luphord/nelson_siegel_svensson.git   nss
+https://github.com/luphord/longstaff_schwartz.git   ls
+https://github.com/luphord/imgwrench.git    imgwrench
+https://github.com/luphord/hyperdiary.git   hyperdiary
