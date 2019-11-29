@@ -1,2 +1,2 @@
 # bootstrap
-Tools to bootstrap a luphord's dev environment
+Simple tooling to bootstrap luphord's dev environment on a new linux machine.
