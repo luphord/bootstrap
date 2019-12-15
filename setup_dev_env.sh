@@ -13,12 +13,14 @@ clone_update_repo() {
     if [ ! -d $repo_folder ]; then
         echo "Folder $repo_folder does not exist, cloning repository..."
         cd $REPOS
+        git clone $repo
     fi
     cd $repo_folder
     if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
         local remote_url=$(git remote get-url origin)
         if [ "$repo" = "$remote_url" ]; then
             echo "Folder $repo_folder is a repository and remote url is correct; pulling..."
+            git pull
         else
             echo "Folder $repo_folder is a repository, but remote url is $remote_url, not $repo, please check!"
         fi
