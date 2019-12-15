@@ -6,7 +6,7 @@ sudo apt update
 sudo apt install -y git
 
 start_pwd=$(pwd)
-tmp_folder="/tmp/luphord$RANDOM"
+tmp_folder=$(echo "/tmp/luphord$RANDOM")
 mkdir $tmp_folder
 cd $tmp_folder
 echo "Working in $tmp_folder"
