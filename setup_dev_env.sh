@@ -4,6 +4,20 @@ ROOT=${LUPHORD_ROOT:-~/root}
 REPOS=${LUPHORD_REPOS:-~/repos}
 REPOS_ENVS_FILE=$(readlink -f repos_envs.txt)
 
+setup_conda() {
+    echo
+    echo 'Checking for conda...'
+    command -v conda >/dev/null 2>&1 \
+        || { echo >&2 "conda is required, but not installed (or not in path). Aborting."; exit 1; }
+    echo 'Conda is available'
+    conda --version
+    echo
+
+    echo 'Available conda environments'
+    conda env list
+    echo
+}
+
 clone_update_repo() {
     local start_pwd=$(pwd)
     local repo=$1
@@ -31,10 +45,19 @@ clone_update_repo() {
     cd $start_pwd
 }
 
+clone_update_repos() {
+    echo
+    for repo in $(awk '{print $1}' $REPOS_ENVS_FILE); do
+        clone_update_repo $repo
+    done
+    echo
+    echo "All repositories available and up-to-date."
+    echo
+}
+
 echo "Installation base folder will be $ROOT"
 echo "Repositories will be cloned into $REPOS"
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
-for repo in $(awk '{print $1}' $REPOS_ENVS_FILE); do
-    clone_update_repo $repo
-done
+setup_conda
+clone_update_repos
