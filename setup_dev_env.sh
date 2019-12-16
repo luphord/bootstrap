@@ -35,8 +35,10 @@ setup_conda() {
     $CONDA --version
     echo
 
-    echo 'Available conda environments'
-    $CONDA env list
+    echo 'Available conda environments:'
+    AVAILABLE_ENVS=$(conda env list | tail -n +3 | awk '{ print $1 }')
+    echo $AVAILABLE_ENVS
+    export $AVAILABLE_ENVS
     echo
 }
 
