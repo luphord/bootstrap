@@ -21,11 +21,15 @@ parallel_run() {
     fi
 }
 
+error_echo() {
+    echo "$@" 1>&2;
+}
+
 setup_conda() {
     echo
     echo 'Checking for conda...'
     command -v conda >/dev/null 2>&1 \
-        || { echo >&2 "conda is required, but not installed (or not in path). Aborting."; return 1; }
+        || { error_echo "conda is required, but not installed (or not in path). Aborting."; return 1; }
     echo 'Conda is available'
     conda --version
     echo
@@ -53,10 +57,10 @@ clone_update_repo() {
             echo "Folder $repo_folder is a repository and remote url is correct; pulling..."
             dry_run || git pull
         else
-            echo "Folder $repo_folder is a repository, but remote url is $remote_url, not $repo, please check!"
+            error_echo "Folder $repo_folder is a repository, but remote url is $remote_url, not $repo, please check!"
         fi
     else
-        echo "Folder $repo_folder is not a repository, please check!"
+        error_echo "Folder $repo_folder is not a repository, please check!"
         return 1
     fi
     cd $start_pwd
