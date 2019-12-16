@@ -3,6 +3,7 @@
 ROOT=${LUPHORD_ROOT:-~/root}
 REPOS=${LUPHORD_REPOS:-~/repos}
 REPOS_ENVS_FILE=$(readlink -f repos_envs.txt)
+CONDA=${LUPHORD_CONDA:-conda}
 
 dry_run() {
     if [ "$LUPHORD_DRY_RUN" = true ]; then
@@ -27,15 +28,15 @@ error_echo() {
 
 setup_conda() {
     echo
-    echo 'Checking for conda...'
-    command -v conda >/dev/null 2>&1 \
-        || { error_echo "conda is required, but not installed (or not in path). Aborting."; return 1; }
-    echo 'Conda is available'
-    conda --version
+    echo "Checking for $CONDA..."
+    command -v $CONDA >/dev/null 2>&1 \
+        || { error_echo "$CONDA is required, but not installed (or not in path). Aborting."; return 1; }
+    echo "$CONDA is available"
+    $CONDA --version
     echo
 
     echo 'Available conda environments'
-    conda env list
+    $CONDA env list
     echo
 }
 
