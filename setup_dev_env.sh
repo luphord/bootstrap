@@ -25,7 +25,7 @@ setup_conda() {
     echo
     echo 'Checking for conda...'
     command -v conda >/dev/null 2>&1 \
-        || { echo >&2 "conda is required, but not installed (or not in path). Aborting."; exit 1; }
+        || { echo >&2 "conda is required, but not installed (or not in path). Aborting."; return 1; }
     echo 'Conda is available'
     conda --version
     echo
@@ -57,7 +57,7 @@ clone_update_repo() {
         fi
     else
         echo "Folder $repo_folder is not a repository, please check!"
-        exit 1
+        return 1
     fi
     cd $start_pwd
 }
@@ -66,7 +66,7 @@ clone_update_repos() {
     echo
     for repo in $(awk '{print $1}' $REPOS_ENVS_FILE); do
         parallel_run && clone_update_repo $repo &
-        parallel_run || clone_update_repo $repo
+        parallel_run || clone_update_repo $repo || exit 1
     done
     wait
     echo
