@@ -13,6 +13,14 @@ dry_run() {
     fi
 }
 
+parallel_run() {
+    if [ "$LUPHORD_PARALLEL" = true ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 setup_conda() {
     echo
     echo 'Checking for conda...'
@@ -57,8 +65,10 @@ clone_update_repo() {
 clone_update_repos() {
     echo
     for repo in $(awk '{print $1}' $REPOS_ENVS_FILE); do
-        clone_update_repo $repo
+        parallel_run && clone_update_repo $repo &
+        parallel_run || clone_update_repo $repo
     done
+    wait
     echo
     echo "All repositories available and up-to-date."
     echo
