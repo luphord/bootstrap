@@ -81,9 +81,37 @@ clone_update_repos() {
     echo
 }
 
+create_update_conda_env() {
+    local start_pwd=$(pwd)
+    local repo=$1
+    local env_name=$2
+    local repo_folder=$REPOS/$(basename -s .git $repo)
+    echo "----"
+    echo "Checking for conda env $env_name for repo $repo..."
+    case "$AVAILABLE_ENVS" in
+        *"$env_name"*)
+            echo "$env_name already exists" ;;
+        *) echo
+            echo "$env_name does not yet exist; creating..." ;;	
+    esac
+}
+
+create_update_conda_envs() {
+    echo
+    echo "Creating and updating conda environments..."
+    cat $REPOS_ENVS_FILE | while read line 
+    do
+        create_update_conda_env $line
+    done
+    echo
+    echo "All conda environments available and up-to-date."
+    echo
+}
+
 echo "Installation base folder will be $ROOT"
 echo "Repositories will be cloned into $REPOS"
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
 setup_conda
 clone_update_repos
+create_update_conda_envs
