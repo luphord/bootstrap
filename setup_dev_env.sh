@@ -4,6 +4,7 @@ ROOT=${LUPHORD_ROOT:-~/root}
 REPOS=${LUPHORD_REPOS:-~/repos}
 REPOS_ENVS_FILE=$(readlink -f repos_envs.txt)
 CONDA=${LUPHORD_CONDA:-conda}
+VSCODE=${LUPHORD_VSCODE:-code}
 
 dry_run() {
     if [ "$LUPHORD_DRY_RUN" = true ]; then
@@ -33,6 +34,21 @@ install_system_packages() {
     dry_run || sudo apt update -y
     dry_run || sudo apt install -y $packages
     echo "System package installation completed"
+}
+
+install_vscode() {
+    echo "Checking for $VSCODE..."
+    if command -v $VSCODE >/dev/null 2>&1 ; then
+        echo "$VSCODE is available"
+    else
+        echo "$VSCODE is missing, installing..."
+        dry_run || curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+        dry_run || sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+        dry_run || sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+        dry_run || sudo apt update -y
+        dry_run || sudo apt install -y code
+        echo  "Installed vscode"
+    fi;
 }
 
 configure_git() {
@@ -145,6 +161,7 @@ mkdir -p $REPOS
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
 install_system_packages
+install_vscode
 configure_git
 clone_update_repos
 setup_conda
