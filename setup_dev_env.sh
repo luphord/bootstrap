@@ -97,7 +97,7 @@ create_update_conda_env() {
             echo "$env_name already exists" ;;
         *) echo
             echo "$env_name does not yet exist; creating..."
-            dry_run || conda create -n $env_name python=3.7 ;;
+            dry_run || conda create -y -n $env_name python=3.7 ;;
     esac
     cd $repo_folder
     echo "Activating $env_name..."
