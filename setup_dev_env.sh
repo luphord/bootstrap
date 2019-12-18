@@ -134,6 +134,6 @@ echo "Repositories will be cloned into $REPOS"
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
 configure_git
-setup_conda
 clone_update_repos
+setup_conda
 create_update_conda_envs
