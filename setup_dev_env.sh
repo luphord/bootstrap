@@ -130,7 +130,9 @@ create_update_conda_envs() {
 }
 
 echo "Installation base folder will be $ROOT"
+mkdir -p $ROOT
 echo "Repositories will be cloned into $REPOS"
+mkdir -p $REPOS
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
 configure_git
