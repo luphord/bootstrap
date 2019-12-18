@@ -4,6 +4,7 @@ ROOT=${LUPHORD_ROOT:-~/root}
 REPOS=${LUPHORD_REPOS:-~/repos}
 REPOS_ENVS_FILE=$(readlink -f repos_envs.txt)
 CONDA=${LUPHORD_CONDA:-conda}
+MINICONDA_SETUP=${LUPHORD_MINICONDA_SETUP:-~/Downloads/miniconda.sh}
 VSCODE=${LUPHORD_VSCODE:-code}
 
 dry_run() {
@@ -62,11 +63,23 @@ configure_git() {
 setup_conda() {
     echo
     echo "Checking for $CONDA..."
-    command -v $CONDA >/dev/null 2>&1 \
-        || { error_echo "$CONDA is required, but not installed (or not in path). Aborting."; return 1; }
-    echo "$CONDA is available"
+    if command -v $CONDA >/dev/null 2>&1 ; then
+        echo "$CONDA is available"
+    else
+        echo "$CONDA is missing, installing..."
+        if [ -f $MINICONDA_SETUP ]; then
+            echo "$MINICONDA_SETUP found, installing..."
+        else
+            echo "$MINICONDA_SETUP missing, downloading..."
+            wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $MINICONDA_SETUP
+            echo "Downloaded $MINICONDA_SETUP"
+        fi;
+        echo "Installing $MINICONDA_SETUP"
+        chmod +x $MINICONDA_SETUP
+        $MINICONDA_SETUP -b -p ~/root/miniconda3
+        echo  "Installed miniconda"
+    fi;
     $CONDA --version
-    echo
 
     echo 'Available conda environments:'
     AVAILABLE_ENVS=$(conda env list | tail -n +3 | awk '{ print $1 }')
