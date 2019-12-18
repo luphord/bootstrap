@@ -1,0 +1,3 @@
+git
+docker.io
+docker-compose

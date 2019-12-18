@@ -26,6 +26,15 @@ error_echo() {
     echo "$@" 1>&2;
 }
 
+install_system_packages() {
+    packages=$(cat sys_pkgs.txt)
+    echo
+    echo "Installing system packages $packages..."
+    dry_run || sudo apt update -y
+    dry_run || sudo apt install -y $packages
+    echo "System package installation completed"
+}
+
 configure_git() {
     echo
     echo "Configuring git..."
@@ -135,6 +144,7 @@ echo "Repositories will be cloned into $REPOS"
 mkdir -p $REPOS
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
+install_system_packages
 configure_git
 clone_update_repos
 setup_conda
