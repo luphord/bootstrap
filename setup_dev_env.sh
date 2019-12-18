@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ROOT=${LUPHORD_ROOT:-~/root}
 REPOS=${LUPHORD_REPOS:-~/repos}
@@ -92,8 +92,17 @@ create_update_conda_env() {
         *"$env_name"*)
             echo "$env_name already exists" ;;
         *) echo
-            echo "$env_name does not yet exist; creating..." ;;	
+            echo "$env_name does not yet exist; creating..."
+            dry_run || conda create -n $env_name python=3.7 ;;
     esac
+    cd $repo_folder
+    echo "Activating $env_name..."
+    source activate $env_name
+    dry_run || pip install -e . -U
+    dry_run || pip install -r requirements_dev.txt -U
+    conda deactivate
+    cd $start_pwd
+    echo "Setup of $env_name completed"
 }
 
 create_update_conda_envs() {
