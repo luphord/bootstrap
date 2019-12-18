@@ -26,6 +26,14 @@ error_echo() {
     echo "$@" 1>&2;
 }
 
+configure_git() {
+    echo
+    echo "Configuring git..."
+    dry_run || git config --global user.name "luphord"
+    dry_run || git config --global user.name "luphord@protonmail.com"
+    echo "git configured"
+}
+
 setup_conda() {
     echo
     echo "Checking for $CONDA..."
@@ -125,6 +133,7 @@ echo "Installation base folder will be $ROOT"
 echo "Repositories will be cloned into $REPOS"
 echo "Reading repositories and environment names from $REPOS_ENVS_FILE"
 
+configure_git
 setup_conda
 clone_update_repos
 create_update_conda_envs
