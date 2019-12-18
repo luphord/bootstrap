@@ -87,6 +87,10 @@ create_update_conda_env() {
     local env_name=$2
     local repo_folder=$REPOS/$(basename -s .git $repo)
     echo "----"
+    if [ -z $env_name ]; then
+        echo "No conda environment name for repo $repo, skipping"
+        return 0
+    fi;
     echo "Checking for conda env $env_name for repo $repo..."
     case "$AVAILABLE_ENVS" in
         *"$env_name"*)
