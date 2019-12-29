@@ -56,7 +56,7 @@ configure_git() {
     echo
     echo "Configuring git..."
     dry_run || git config --global user.name "luphord"
-    dry_run || git config --global user.name "luphord@protonmail.com"
+    dry_run || git config --global user.email "luphord@protonmail.com"
     echo "git configured"
 }
 
