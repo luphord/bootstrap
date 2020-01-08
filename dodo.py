@@ -1,5 +1,7 @@
 from pathlib import Path
 
+user = 'luphord'
+user_email = 'luphord@protonmail.com'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 
 def get_repos_envs():
@@ -10,6 +12,15 @@ def get_repos_envs():
             repo = parts[0]
             env = parts[1] if len(parts) > 1 else None
             yield repo, env
+
+def task_configure_git():
+    '''Configure git user and email address'''
+    return {
+        'actions': [
+            'echo configuring git user {}'.format(user),
+            'echo configuring git email {}'.format(user_email)
+        ]
+    }
 
 def task_clone_update_repository():
     '''Clone and/or update a git repository'''
