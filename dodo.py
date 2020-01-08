@@ -17,8 +17,8 @@ def task_configure_git():
     '''Configure git user and email address'''
     return {
         'actions': [
-            'echo configuring git user {}'.format(user),
-            'echo configuring git email {}'.format(user_email)
+            'git config --global user.name "{}"'.format(user),
+            'git config --global user.email "{}"'.format(user_email)
         ]
     }
 
