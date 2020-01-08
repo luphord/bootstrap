@@ -41,15 +41,15 @@ def task_configure_git():
 def task_clone_update_repository():
     '''Clone and/or update a git repository'''
     for repo, _ in get_repos_envs():
-            yield {
-                'name': Path(repo).name,
-                'actions': ['echo {}'.format(repo)]
-            }
+        yield {
+            'name': Path(repo).name,
+            'actions': ['echo {}'.format(repo)]
+        }
 
 def task_create_update_conda_env():
     '''Create and/or update a conda environment'''
     for repo, env in get_repos_envs():
-            yield {
-                'name': Path(repo).name,
-                'actions': ['echo {} {}'.format(repo, env)]
-            }
+        yield {
+            'name': Path(repo).name,
+            'actions': ['echo {} {}'.format(repo, env)]
+        }
