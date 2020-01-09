@@ -2,6 +2,7 @@ from pathlib import Path
 
 user = 'luphord'
 user_email = 'luphord@protonmail.com'
+repos_base_folder = Path.home() / 'repos'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 
@@ -37,6 +38,19 @@ def task_configure_git():
             'git config --global user.email "{}"'.format(user_email)
         ]
     }
+
+
+
+def task_clone_repository():
+    '''Clone a repository into the specified base folder'''
+    for repo_url, _ in get_repos_envs():
+        repo_folder = repos_base_folder / Path(repo_url).stem
+        yield {
+            'name': Path(repo_url).name,
+            'actions': ['echo git clone {}'.format(repo_url)],
+            'targets': [repo_folder / '.git'],
+            'uptodate': [True] # up to date if target exists
+        }
 
 def task_clone_update_repository():
     '''Clone and/or update a git repository'''
