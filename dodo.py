@@ -9,16 +9,19 @@ repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 def get_sys_packages():
     with open(sys_packages_txt) as f:
         for line in f:
-            yield line.strip()
+            line = line.strip()
+            if line:
+                yield line
 
 def get_repos_envs():
     '''Load repository and environment names from config file'''
     with open(repos_envs_txt) as f:
         for line in f:
             parts = line.split()
-            repo = parts[0]
-            env = parts[1] if len(parts) > 1 else None
-            yield repo, env
+            if parts:
+                repo = parts[0]
+                env = parts[1] if len(parts) > 1 else None
+                yield repo, env
 
 def task_install_system_packages():
     '''Install required system packages via apt'''
