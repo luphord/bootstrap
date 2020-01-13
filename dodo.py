@@ -84,6 +84,17 @@ def task_clone_repository():
         }
 
 
+def task_update_repository():
+    '''Pull changes of the repository from remote source'''
+    for repo_info in get_repos_envs():
+        yield {
+            'name': repo_info.name,
+            'actions': ['git -C {} pull'.format(repo_info.folder)],
+            # 'file_dep': [repo_info.dot_git_folder],
+            'uptodate': [False] # always pull as we don't know anything about remote source
+        }
+
+
 def task_clone_update_repository():
     '''Clone and/or update a git repository'''
     for repo_info in get_repos_envs():
