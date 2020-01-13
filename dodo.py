@@ -50,7 +50,7 @@ def task_clone_repository():
         repo_folder = repos_base_folder / Path(repo_url).stem
         yield {
             'name': Path(repo_url).name,
-            'actions': ['echo git clone {}'.format(repo_url)],
+            'actions': ['git clone {} {}'.format(repo_url, repo_folder)],
             'targets': [repo_folder / '.git'],
             'uptodate': [True] # up to date if target exists
         }
