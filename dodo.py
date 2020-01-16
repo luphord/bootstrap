@@ -95,10 +95,24 @@ def task_update_repository():
         }
 
 
-def task_create_update_conda_env():
-    '''Create and/or update a conda environment'''
+def task_create_conda_env():
+    '''Create a conda environment'''
     for repo_info in get_repos_envs():
-        yield {
-            'name': repo_info.name,
-            'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)]
-        }
+        if repo_info.env:
+            yield {
+                'name': repo_info.env,
+                'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)],
+                'task_dep': ['clone_repository:{}'.format(repo_info.name)]
+                # ToDo: uptodate
+            }
+
+
+def task_update_conda_env():
+    '''Update a conda environment'''
+    for repo_info in get_repos_envs():
+        if repo_info.env:
+            yield {
+                'name': repo_info.env,
+                'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)],
+                'task_dep': ['create_conda_env:{}'.format(repo_info.env)]
+            }
