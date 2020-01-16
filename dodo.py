@@ -90,7 +90,7 @@ def task_update_repository():
         yield {
             'name': repo_info.name,
             'actions': ['git -C {} pull'.format(repo_info.folder)],
-            # 'file_dep': [repo_info.dot_git_folder],
+            'task_dep': ['clone_repository:{}'.format(repo_info.name)],
             'uptodate': [False] # always pull as we don't know anything about remote source
         }
 
