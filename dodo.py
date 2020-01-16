@@ -63,6 +63,11 @@ def get_existing_envs():
         yield (parts[0], parts[-1])
 
 
+def env_exists(env):
+    envs = dict(get_existing_envs())
+    return env in envs
+
+
 ### TASKS ###
 
 
