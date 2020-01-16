@@ -121,8 +121,8 @@ def task_create_conda_env():
             yield {
                 'name': repo_info.env,
                 'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)],
-                'task_dep': ['clone_repository:{}'.format(repo_info.name)]
-                # ToDo: uptodate
+                'task_dep': ['clone_repository:{}'.format(repo_info.name)],
+                'uptodate': [lambda env=repo_info.env: env_exists(env)]
             }
 
 
