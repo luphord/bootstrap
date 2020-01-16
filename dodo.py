@@ -95,15 +95,6 @@ def task_update_repository():
         }
 
 
-def task_clone_update_repository():
-    '''Clone and/or update a git repository'''
-    for repo_info in get_repos_envs():
-        yield {
-            'name': repo_info.name,
-            'actions': ['echo {}'.format(repo_info)]
-        }
-
-
 def task_create_update_conda_env():
     '''Create and/or update a conda environment'''
     for repo_info in get_repos_envs():
