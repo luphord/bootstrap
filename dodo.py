@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 
 user = 'luphord'
 user_email = 'luphord@protonmail.com'
@@ -47,6 +48,19 @@ def get_repos_envs():
                 repo = parts[0]
                 env = parts[1] if len(parts) > 1 else None
                 yield RepoInfo(repo, env)
+
+
+def get_existing_envs():
+    '''Get existing conda environments with their path'''
+    conda_out = subprocess.run(['conda', 'env', 'list'],
+                               stdout=subprocess.PIPE).stdout.decode('utf8')
+    for line in conda_out.splitlines():
+        if not line or line.startswith('#') or line.startswith(' '):
+            continue
+        parts = line.split()
+        if len(line) < 2:
+            continue
+        yield (parts[0], parts[-1])
 
 
 ### TASKS ###
