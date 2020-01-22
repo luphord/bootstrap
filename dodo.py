@@ -8,6 +8,7 @@ sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 conda_env_python_version = '3.7'
 vscode_command = 'code'
+conda_command = 'conda'
 
 
 def get_sys_packages():
@@ -43,7 +44,7 @@ class RepoInfo:
     
     @property
     def conda_run(self):
-        return 'conda run -n {}'.format(self.env)
+        return '{} run -n {}'.format(conda_command, self.env)
     
     def __str__(self):
         return self.url
@@ -62,7 +63,7 @@ def get_repos_envs():
 
 def get_existing_envs():
     '''Get existing conda environments with their path'''
-    conda_out = subprocess.run(['conda', 'env', 'list'],
+    conda_out = subprocess.run([conda_command, 'env', 'list'],
                                stdout=subprocess.PIPE).stdout.decode('utf8')
     for line in conda_out.splitlines():
         if not line or line.startswith('#') or line.startswith(' '):
@@ -145,8 +146,9 @@ def task_create_conda_env():
         if repo_info.env:
             yield {
                 'name': repo_info.env,
-                'actions': ['conda create -y -n {} python={}'.format(repo_info.env,
-                                                                     conda_env_python_version)],
+                'actions': ['{} create -y -n {} python={}'.format(conda_command,
+                                                                  repo_info.env,
+                                                                  conda_env_python_version)],
                 'task_dep': ['clone_repository:{}'.format(repo_info.name)],
                 'uptodate': [lambda env=repo_info.env: env_exists(env)]
             }
