@@ -7,6 +7,7 @@ repos_base_folder = Path.home() / 'repos'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 conda_env_python_version = '3.7'
+vscode_command = 'code'
 
 
 def get_sys_packages():
@@ -89,6 +90,21 @@ def task_install_system_packages():
             'sudo apt install -y {}'.format(pkg_string)
         ]
     }
+
+
+def task_install_vscode():
+    '''Install Visual Studio Code'''
+    return {
+        'actions': [
+            'curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg',
+            'sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg',
+            'sudo sh -c \'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list\'',
+            'sudo apt update -y',
+            'sudo apt install -y code'
+        ],
+        'uptodate': ['command -v {}'.format(vscode_command)]
+    }
+
 
 
 def task_configure_git():
