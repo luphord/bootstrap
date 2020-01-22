@@ -6,6 +6,7 @@ user_email = 'luphord@protonmail.com'
 repos_base_folder = Path.home() / 'repos'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
+conda_env_python_version = '3.7'
 
 
 def get_sys_packages():
@@ -128,7 +129,8 @@ def task_create_conda_env():
         if repo_info.env:
             yield {
                 'name': repo_info.env,
-                'actions': ['conda create -y -n {} python=3.7'.format(repo_info.env)],
+                'actions': ['conda create -y -n {} python={}'.format(repo_info.env,
+                                                                     conda_env_python_version)],
                 'task_dep': ['clone_repository:{}'.format(repo_info.name)],
                 'uptodate': [lambda env=repo_info.env: env_exists(env)]
             }
