@@ -4,11 +4,14 @@ import subprocess
 user = 'luphord'
 user_email = 'luphord@protonmail.com'
 repos_base_folder = Path.home() / 'repos'
+local_install_base_folder = Path.home() / 'root'
+miniconda_install_folder = local_install_base_folder / 'miniconda3'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 conda_env_python_version = '3.7'
 vscode_command = 'code'
 conda_command = 'conda'
+miniconda_setup = Path.home() / 'Downloads' / 'miniconda.sh'
 
 
 def get_sys_packages():
@@ -106,6 +109,26 @@ def task_install_vscode():
         'uptodate': ['command -v {}'.format(vscode_command)]
     }
 
+
+def task_download_miniconda():
+    '''Download miniconda'''
+    return {
+        'actions': ['wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O {}'.format(miniconda_setup)],
+        'targets': [miniconda_setup],
+        'uptodate': [True]  # up to date if target exists
+    }
+
+
+def task_install_conda():
+    '''Install conda'''
+    return {
+        'actions': [
+            'chmod +x {}'.format(miniconda_setup),
+            '{} -b -p {}'.format(miniconda_setup, miniconda_install_folder)
+        ],
+        'task_dep': ['download_miniconda'],
+        'uptodate': ['command -v {}'.format(conda_command)]
+    }
 
 
 def task_configure_git():
