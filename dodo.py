@@ -35,6 +35,14 @@ class RepoInfo:
     def dot_git_folder(self):
         return self.folder / '.git'
     
+    @property
+    def requirements_dev(self):
+        return self.folder / 'requirements_dev.txt'
+    
+    @property
+    def conda_run(self):
+        return 'conda run -n {}'.format(self.env)
+    
     def __str__(self):
         return self.url
 
@@ -120,7 +128,7 @@ def task_create_conda_env():
         if repo_info.env:
             yield {
                 'name': repo_info.env,
-                'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)],
+                'actions': ['conda create -y -n {} python=3.7'.format(repo_info.env)],
                 'task_dep': ['clone_repository:{}'.format(repo_info.name)],
                 'uptodate': [lambda env=repo_info.env: env_exists(env)]
             }
@@ -132,6 +140,10 @@ def task_update_conda_env():
         if repo_info.env:
             yield {
                 'name': repo_info.env,
-                'actions': ['echo {} {}'.format(repo_info.url, repo_info.env)],
+                'actions': [
+                    '{} pip install -e {} -U'.format(repo_info.conda_run,
+                                                     repo_info.folder),
+                    '{} pip install -r {} -U'.format(repo_info.conda_run,
+                                                     repo_info.requirements_dev)],
                 'task_dep': ['create_conda_env:{}'.format(repo_info.env)]
             }
