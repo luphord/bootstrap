@@ -137,7 +137,8 @@ def task_configure_git():
         'actions': [
             'git config --global user.name "{}"'.format(user),
             'git config --global user.email "{}"'.format(user_email)
-        ]
+        ],
+        'task_dep': ['install_system_packages']
     }
 
 
@@ -148,6 +149,7 @@ def task_clone_repository():
             'name': repo_info.name,
             'actions': ['git clone {} {}'.format(repo_info.url, repo_info.folder)],
             'targets': [repo_info.dot_git_folder],
+            'task_dep': ['configure_git'],
             'uptodate': [True] # up to date if target exists
         }
 
@@ -172,7 +174,10 @@ def task_create_conda_env():
                 'actions': ['{} create -y -n {} python={}'.format(conda_command,
                                                                   repo_info.env,
                                                                   conda_env_python_version)],
-                'task_dep': ['clone_repository:{}'.format(repo_info.name)],
+                'task_dep': [
+                    'install_conda',
+                    'clone_repository:{}'.format(repo_info.name)
+                ],
                 'uptodate': [lambda env=repo_info.env: env_exists(env)]
             }
 
