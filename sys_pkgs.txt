@@ -4,3 +4,4 @@ docker.io
 docker-compose
 keepass2
 xdotool
+xsel
