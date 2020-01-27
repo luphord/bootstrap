@@ -195,3 +195,15 @@ def task_update_conda_env():
                                                      repo_info.requirements_dev)],
                 'task_dep': ['create_conda_env:{}'.format(repo_info.env)]
             }
+
+def task_setup_dev_environment():
+    '''Meta-task for a complete setup of dev environment'''
+    return {
+        'actions': ['echo "DEV environment setup complete"'],
+        'task_dep': [
+            'update_conda_env'
+        ]
+    }
+
+
+DOIT_CONFIG = {'default_tasks': ['setup_dev_environment']}
