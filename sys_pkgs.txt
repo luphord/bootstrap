@@ -1,5 +1,6 @@
 git
 cookiecutter
+python3-doit
 docker.io
 docker-compose
 keepass2

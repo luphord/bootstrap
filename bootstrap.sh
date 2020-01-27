@@ -3,7 +3,7 @@
 echo "Bootstrapping luphord's dev environment..."
 
 sudo apt update
-sudo apt install -y git
+sudo apt install -y git python3-doit
 
 start_pwd=$(pwd)
 tmp_folder=$(echo "/tmp/luphord$RANDOM")
