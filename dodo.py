@@ -22,6 +22,22 @@ def get_sys_packages():
                 yield line
 
 
+def get_installed_sys_packages():
+    dpkg_out = subprocess.run(['dpkg', '--list'],
+                               stdout=subprocess.PIPE).stdout.decode('utf8')
+    for line in dpkg_out.splitlines():
+        parts = line.split()
+        if len(parts) > 1:
+            yield parts[1]
+
+
+def all_sys_packages_installed():
+    '''Check if all required sys packages are already installed'''
+    required_pkgs = set(get_sys_packages())
+    available_pkgs = set(get_installed_sys_packages())
+    return required_pkgs.issubset(available_pkgs)
+
+
 class RepoInfo:
     '''Meta information about a git repository and its local file paths'''
     def __init__(self, repo_url, env, repos_base_folder=repos_base_folder):
@@ -92,7 +108,8 @@ def task_install_system_packages():
         'actions': [
             'sudo apt update',
             'sudo apt install -y {}'.format(pkg_string)
-        ]
+        ],
+        'uptodate': [all_sys_packages_installed]
     }
 
 
