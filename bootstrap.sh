@@ -13,7 +13,7 @@ echo "Working in $tmp_folder"
 
 git clone https://github.com/luphord/bootstrap.git
 cd bootstrap
-./setup_dev_env.sh
+doit -v 2
 
 echo "Setup of luphord's dev environment done; deleting temp folder..."
 cd $start_pwd
