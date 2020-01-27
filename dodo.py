@@ -38,6 +38,25 @@ def all_sys_packages_installed():
     return required_pkgs.issubset(available_pkgs)
 
 
+def get_git_config_iter():
+    git_out = subprocess.run(['git', 'config', '--list'],
+                             stdout=subprocess.PIPE).stdout.decode('utf8')
+    for line in git_out.splitlines():
+        parts = line.split('=')
+        if len(parts) > 1:
+            yield parts[:2]
+
+
+def get_git_config():
+    return dict(get_git_config_iter())
+
+
+def is_git_config_uptodate():
+    cfg = get_git_config()
+    return cfg.get('user.email') == user_email \
+        and cfg.get('user.name') == user
+
+
 class RepoInfo:
     '''Meta information about a git repository and its local file paths'''
     def __init__(self, repo_url, env, repos_base_folder=repos_base_folder):
@@ -157,7 +176,8 @@ def task_configure_git():
             'git config --global user.name "{}"'.format(user),
             'git config --global user.email "{}"'.format(user_email)
         ],
-        'task_dep': ['install_system_packages']
+        'task_dep': ['install_system_packages'],
+        'uptodate': [is_git_config_uptodate]
     }
 
 
