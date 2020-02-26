@@ -180,6 +180,17 @@ def task_configure_git():
         'uptodate': [is_git_config_uptodate]
     }
 
+def task_setup_docker():
+    '''Setup docker group'''
+    return {
+        'actions': [
+            'sudo groupadd -f docker',
+            'sudo usermod -aG docker $USER'
+        ],
+        'task_dep': ['install_system_packages'],
+        'uptodate': [False]
+    }
+
 
 def task_clone_repository():
     '''Clone a repository into the specified base folder'''
@@ -240,6 +251,7 @@ def task_setup_dev_environment():
     return {
         'actions': ['echo "DEV environment setup complete"'],
         'task_dep': [
+            'setup_docker',
             'update_conda_env'
         ]
     }
