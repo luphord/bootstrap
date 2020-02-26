@@ -2,7 +2,7 @@ https://github.com/luphord/algoristic.git
 https://github.com/luphord/arithmepad.git
 https://github.com/luphord/australian-housing-exercise.git
 https://github.com/luphord/base.git
-https://github.com/luphord/blanketdb.git
+https://github.com/luphord/blanketdb.git    blanketdb
 https://github.com/luphord/bootstrap.git
 https://github.com/luphord/hyperdiary.git	hyperdiary
 https://github.com/luphord/imgwrench.git	imgwrench
