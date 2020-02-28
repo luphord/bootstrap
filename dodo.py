@@ -1,5 +1,8 @@
 from pathlib import Path
 import subprocess
+import os
+import json
+import urllib.request
 
 user = 'luphord'
 user_email = 'luphord@protonmail.com'
@@ -8,6 +11,7 @@ local_install_base_folder = Path.home() / 'root'
 miniconda_install_folder = local_install_base_folder / 'miniconda3'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
+repos_url = 'https://api.github.com/users/luphord/repos'
 conda_env_python_version = '3.7'
 vscode_command = 'code'
 conda_command = 'conda'
@@ -97,6 +101,28 @@ def get_repos_envs():
                 repo = parts[0]
                 env = parts[1] if len(parts) > 1 else None
                 yield RepoInfo(repo, env)
+
+
+def update_repo_env_list():
+    '''Update config file containing repositories by querying github API
+       for new projects.'''
+    repos_envs_dict = {repo_info.url: repo_info for repo_info in get_repos_envs()}
+    with urllib.request.urlopen(repos_url) as f:
+        repos = json.loads((f.read().decode('utf-8')))
+
+        for repo in repos:
+            repo_url = repo['clone_url']
+            if not repo_url in repos_envs_dict:
+                print('Adding {} to {}...'.format(repo_url, repos_envs_txt))
+                repos_envs_dict[repo_url] = None
+
+        with open(repos_envs_txt, 'w') as f:
+            for repo, repo_info in sorted(repos_envs_dict.items()):
+                if repo_info and repo_info.env:
+                    line = '{}\t{}'.format(repo, repo_info.env)
+                else:
+                    line = repo
+                f.write(line + os.linesep)
 
 
 def get_existing_envs():
@@ -256,5 +282,13 @@ def task_setup_dev_environment():
         ]
     }
 
+
+def task_update_repo_env_list():
+    '''Update config file containing repositories by querying github API
+       for new projects.'''
+    return {
+        'actions': [update_repo_env_list],
+        'uptodate': [False]
+    }
 
 DOIT_CONFIG = {'default_tasks': ['setup_dev_environment']}
