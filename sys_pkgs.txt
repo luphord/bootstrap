@@ -13,3 +13,4 @@ qemu-kvm
 libvirt0
 libvirt-bin
 virt-manager
+gir1.2-spiceclientgtk-3.0 
