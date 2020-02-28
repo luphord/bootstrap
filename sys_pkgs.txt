@@ -9,3 +9,7 @@ docker-compose
 keepass2
 xdotool
 xsel
+qemu-kvm
+libvirt0
+libvirt-bin
+virt-manager
