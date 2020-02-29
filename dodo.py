@@ -19,7 +19,7 @@ miniconda_setup = Path.home() / 'Downloads' / 'miniconda.sh'
 
 
 def get_sys_packages():
-    with open(sys_packages_txt) as f:
+    with sys_packages_txt.open() as f:
         for line in f:
             line = line.strip()
             if line:
@@ -94,7 +94,7 @@ class RepoInfo:
 
 def get_repos_envs():
     '''Load repository and environment names from config file'''
-    with open(repos_envs_txt) as f:
+    with repos_envs_txt.open() as f:
         for line in f:
             parts = line.split()
             if parts:
@@ -116,7 +116,7 @@ def update_repo_env_list():
                 print('Adding {} to {}...'.format(repo_url, repos_envs_txt))
                 repos_envs_dict[repo_url] = None
 
-        with open(repos_envs_txt, 'w') as f:
+        with repos_envs_txt.open('w') as f:
             for repo, repo_info in sorted(repos_envs_dict.items()):
                 if repo_info and repo_info.env:
                     line = '{}\t{}'.format(repo, repo_info.env)
