@@ -277,7 +277,9 @@ def task_setup_dev_environment():
     return {
         'actions': ['echo "DEV environment setup complete"'],
         'task_dep': [
+            'install_vscode',
             'setup_docker',
+            'update_repository',
             'update_conda_env'
         ]
     }
