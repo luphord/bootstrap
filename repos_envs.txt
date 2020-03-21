@@ -8,6 +8,7 @@ https://github.com/luphord/cookiecutter-pyscript.git
 https://github.com/luphord/hyperdiary.git	hyperdiary
 https://github.com/luphord/imgwrench.git	imgwrench
 https://github.com/luphord/kivy.git
+https://github.com/luphord/knipse.git
 https://github.com/luphord/knipse_old.git
 https://github.com/luphord/longstaff_schwartz.git	ls
 https://github.com/luphord/mapcache.git
