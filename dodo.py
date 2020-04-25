@@ -203,7 +203,6 @@ def task_configure_git():
             'git config --global user.name "{}"'.format(user),
             'git config --global user.email "{}"'.format(user_email)
         ],
-        'task_dep': ['install_system_packages'],
         'uptodate': [is_git_config_uptodate]
     }
 
@@ -278,6 +277,7 @@ def task_setup_dev_environment():
     return {
         'actions': ['echo "DEV environment setup complete"'],
         'task_dep': [
+            'install_system_packages',
             'install_vscode',
             'setup_docker',
             'update_repository',
