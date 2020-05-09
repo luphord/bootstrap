@@ -3,6 +3,7 @@ import subprocess
 import os
 import json
 import urllib.request
+from pkg_resources import parse_version
 
 user = 'luphord'
 user_email = 'luphord@protonmail.com'
@@ -28,7 +29,7 @@ def get_sys_packages():
 
 def get_installed_sys_packages():
     dpkg_out = subprocess.run(['dpkg', '--list'],
-                               stdout=subprocess.PIPE).stdout.decode('utf8')
+                              stdout=subprocess.PIPE).stdout.decode('utf8')
     for line in dpkg_out.splitlines():
         parts = line.split()
         if len(parts) > 1:
@@ -40,6 +41,16 @@ def all_sys_packages_installed():
     required_pkgs = set(get_sys_packages())
     available_pkgs = set(get_installed_sys_packages())
     return required_pkgs.issubset(available_pkgs)
+
+
+def nodejs_version_at_least(version):
+    '''Check if installed nodejs version is at least equal to the given version'''
+    try:
+        nodejs_version = subprocess.run(['node', '--version'],
+                                        stdout=subprocess.PIPE).stdout.decode('utf8')
+    except FileNotFoundError:  # nodejs is not installed at all
+        return False
+    return parse_version(version) <= parse_version(nodejs_version)
 
 
 def get_git_config_iter():
@@ -171,6 +182,22 @@ def task_install_vscode():
         'uptodate': ['command -v {}'.format(vscode_command)]
     }
 
+def task_install_nodejs():
+    '''Install nodejs'''
+    return {
+        'actions': [
+            'sudo apt remove -y nodejs npm',
+            'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -',
+            'sudo apt update',
+            'sudo apt install -y nodejs'
+        ],
+        'uptodate': [
+            'command -v node',
+            'command -v npm',
+            lambda: nodejs_version_at_least('14')
+        ]
+    }
+
 
 def task_download_miniconda():
     '''Download miniconda'''
@@ -279,6 +306,7 @@ def task_setup_dev_environment():
         'task_dep': [
             'install_system_packages',
             'install_vscode',
+            'install_nodejs',
             'setup_docker',
             'update_repository',
             'update_conda_env'
