@@ -14,3 +14,6 @@ libvirt0
 libvirt-bin
 virt-manager
 gir1.2-spiceclientgtk-3.0 
+libjpeg8-dev
+zlib1g-dev
+python3-dev
