@@ -1,3 +1,4 @@
+https://github.com/luphord/Pillow.git
 https://github.com/luphord/algoristic.git
 https://github.com/luphord/arithmepad.git
 https://github.com/luphord/australian-housing-exercise.git
