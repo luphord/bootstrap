@@ -1,6 +1,8 @@
 # bootstrap
 Simple tooling to bootstrap luphord's dev environment on a new Linux Mint machine.
 
+**This branch is for linuxmint 19.3 only!**
+
 ## Usage
 
 ### Bootstrap on new machine
