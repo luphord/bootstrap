@@ -2,6 +2,7 @@ https://github.com/luphord/Pillow.git
 https://github.com/luphord/algoristic.git
 https://github.com/luphord/arithmepad.git
 https://github.com/luphord/australian-housing-exercise.git
+https://github.com/luphord/awesome-stars.git
 https://github.com/luphord/base.git
 https://github.com/luphord/blanketdb.git	blanketdb
 https://github.com/luphord/bootstrap.git
@@ -16,7 +17,7 @@ https://github.com/luphord/linkmem.git
 https://github.com/luphord/longstaff_schwartz.git	ls
 https://github.com/luphord/mapcache.git
 https://github.com/luphord/metapic.git
-https://github.com/luphord/monte-carlo-contracts.git mcontracts
+https://github.com/luphord/monte-carlo-contracts.git	mcontracts
 https://github.com/luphord/my-mind.git
 https://github.com/luphord/nelson_siegel_svensson.git	nss
 https://github.com/luphord/private-cloud.git
