@@ -198,6 +198,20 @@ def task_install_nodejs():
         ]
     }
 
+def task_install_dotnet():
+    '''Install .NET SDK'''
+    return {
+        'actions': [
+            'wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb',
+            'sudo dpkg -i packages-microsoft-prod.deb',
+            'sudo apt update',
+            'sudo apt install -y dotnet-sdk-5.0'
+        ],
+        'uptodate': [
+            'command -v dotnet',
+        ]
+    }
+
 
 def task_download_miniconda():
     '''Download miniconda'''
@@ -307,6 +321,7 @@ def task_setup_dev_environment():
             'install_system_packages',
             'install_vscode',
             'install_nodejs',
+            'install_dotnet',
             'setup_docker',
             'update_repository',
             'update_conda_env'
