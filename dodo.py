@@ -205,7 +205,8 @@ def task_install_dotnet():
             'wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb',
             'sudo dpkg -i packages-microsoft-prod.deb',
             'sudo apt update',
-            'sudo apt install -y dotnet-sdk-5.0'
+            'sudo apt install -y dotnet-sdk-5.0',
+            'echo \'export DOTNET_CLI_TELEMETRY_OPTOUT=1\' >> ${HOME}/.bashrc'
         ],
         'uptodate': [
             'command -v dotnet',
