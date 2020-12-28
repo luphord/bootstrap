@@ -230,8 +230,6 @@ def task_install_conda():
             'chmod +x {}'.format(miniconda_setup),
             '{} -b -p {}'.format(miniconda_setup, miniconda_install_folder),
             'echo \'PATH="${{PATH}}:{}"; export PATH\' >> ${{HOME}}/.bashrc'.format(miniconda_install_folder / 'bin'),
-            'source ${HOME}/.bashrc',
-            'conda init'
         ],
         'task_dep': ['download_miniconda'],
         'uptodate': ['command -v {}'.format(conda_command)]
