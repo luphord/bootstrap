@@ -18,6 +18,7 @@ https://github.com/luphord/linkmem.git
 https://github.com/luphord/longstaff_schwartz.git	ls
 https://github.com/luphord/mapcache.git
 https://github.com/luphord/metapic.git
+https://github.com/luphord/midi-experiments.git
 https://github.com/luphord/monte-carlo-contracts.git	mcontracts
 https://github.com/luphord/my-mind.git
 https://github.com/luphord/nelson_siegel_svensson.git	nss
