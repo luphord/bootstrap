@@ -27,4 +27,5 @@ https://github.com/luphord/py4web.git
 https://github.com/luphord/remcall.git
 https://github.com/luphord/scratchpad.git
 https://github.com/luphord/user_voting_rocks.git
+https://github.com/luphord/video-helpers.git
 https://github.com/luphord/yield_curve_dynamics.git
