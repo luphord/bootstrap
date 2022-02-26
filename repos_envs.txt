@@ -9,6 +9,7 @@ https://github.com/luphord/bootstrap.git
 https://github.com/luphord/cookiecutter-pyscript.git
 https://github.com/luphord/gaussian-analytics.git
 https://github.com/luphord/hyperdiary.git	hyperdiary
+https://github.com/luphord/ihatemoney-pi.git
 https://github.com/luphord/imgwrench.git	imgwrench
 https://github.com/luphord/interactive-plots.git
 https://github.com/luphord/julia-docker-dev.git
