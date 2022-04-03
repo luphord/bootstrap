@@ -5,6 +5,7 @@ https://github.com/luphord/australian-housing-exercise.git
 https://github.com/luphord/awesome-stars.git
 https://github.com/luphord/base.git
 https://github.com/luphord/blanketdb.git	blanketdb
+https://github.com/luphord/blitzcrop.git
 https://github.com/luphord/bootstrap.git
 https://github.com/luphord/cookiecutter-pyscript.git
 https://github.com/luphord/gaussian-analytics.git
