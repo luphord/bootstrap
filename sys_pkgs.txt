@@ -8,11 +8,6 @@ docker-compose
 keepass2
 xdotool
 xsel
-qemu-kvm
-libvirt0
-libvirt-daemon-system
-virt-manager
-gir1.2-spiceclientgtk-3.0 
 libjpeg8-dev
 zlib1g-dev
 python3-dev
