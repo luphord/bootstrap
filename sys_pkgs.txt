@@ -13,3 +13,4 @@ zlib1g-dev
 python3-dev
 dotnet-sdk-6.0
 micro
+htop
