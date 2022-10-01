@@ -9,14 +9,14 @@ user = 'luphord'
 user_email = 'luphord@protonmail.com'
 repos_base_folder = Path.home() / 'repos'
 local_install_base_folder = Path.home() / 'root'
-miniconda_install_folder = local_install_base_folder / 'miniconda3'
+mambaforge_install_folder = local_install_base_folder / 'mambaforge3'
 sys_packages_txt = Path(__file__).parent / 'sys_pkgs.txt'
 repos_envs_txt = Path(__file__).parent / 'repos_envs.txt'
 repos_url = 'https://api.github.com/users/luphord/repos'
 conda_env_python_version = '3.8'
 vscode_command = 'code'
-conda_command = 'conda'
-miniconda_setup = Path.home() / 'Downloads' / 'miniconda.sh'
+conda_command = 'mamba'
+mambaforge_setup = Path.home() / 'Downloads' / 'mambaforge.sh'
 
 
 def get_sys_packages():
@@ -210,11 +210,11 @@ def task_install_dotnet():
     }
 
 
-def task_download_miniconda():
-    '''Download miniconda'''
+def task_download_mambaforge():
+    '''Download mambaforge'''
     return {
-        'actions': ['wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O {}'.format(miniconda_setup)],
-        'targets': [miniconda_setup],
+        'actions': ['wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -O {}'.format(mambaforge_setup)],
+        'targets': [mambaforge_setup],
         'uptodate': [True]  # up to date if target exists
     }
 
@@ -223,11 +223,11 @@ def task_install_conda():
     '''Install conda'''
     return {
         'actions': [
-            'chmod +x {}'.format(miniconda_setup),
-            '{} -b -p {}'.format(miniconda_setup, miniconda_install_folder),
-            'echo \'PATH="${{PATH}}:{}"; export PATH\' >> ${{HOME}}/.bashrc'.format(miniconda_install_folder / 'bin'),
+            'chmod +x {}'.format(mambaforge_setup),
+            '{} -b -p {}'.format(mambaforge_setup, mambaforge_install_folder),
+            'echo \'PATH="${{PATH}}:{}"; export PATH\' >> ${{HOME}}/.bashrc'.format(mambaforge_install_folder / 'bin'),
         ],
-        'task_dep': ['download_miniconda'],
+        'task_dep': ['download_mambaforge'],
         'uptodate': ['command -v {}'.format(conda_command)]
     }
 
