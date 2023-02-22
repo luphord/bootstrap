@@ -14,3 +14,6 @@ python3-dev
 dotnet-sdk-6.0
 micro
 htop
+tree
+neofetch
+tmux
